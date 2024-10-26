@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: ./app  # The directory containing your Dockerfile and Django app
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"  # Maps the container port to the host port for Django
+      - "3000:3000"  # Maps the container port to the host port for Webpack (if needed)
+    volumes:
+      - ./app:/app  # Mounts the application code inside the container for live reloading
+    environment:
+      - DEBUG=True
+      - DJANGO_SETTINGS_MODULE=v2interview.settings  # Use your settings module
+    command: ./entrypoint.sh  # Use entrypoint.sh to run both processes
